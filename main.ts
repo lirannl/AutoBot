@@ -19,7 +19,7 @@ const createEnv: typeof eventHandlers.guildLoaded = (guild) => {
 
 DiscordBot({
     token: config.token,
-    intents: [Intents.GUILD_MESSAGES, Intents.DIRECT_MESSAGES, Intents.GUILDS, Intents.GUILD_MESSAGE_REACTIONS],
+    intents: [Intents.GUILD_MESSAGES, Intents.GUILD_MEMBERS, Intents.DIRECT_MESSAGES, Intents.GUILDS, Intents.GUILD_MESSAGE_REACTIONS],
     eventHandlers: {
         ready: botLogon,
         guildLoaded: createEnv,
