@@ -20,3 +20,7 @@ export const performantMultiOr = (conditions: boolean[]) => {
     }
     return result;
 }
+
+export function reversedArray<T>(arr: T[]): T[] {
+    return arr.reduce((acc, curr) => [curr].concat(acc),[] as T[]);
+}

@@ -1,7 +1,6 @@
 export interface config {
   prefix: string;
   token: string;
-  botID: string;
   reactionMirroringRoles: string[];
   dynoChannel: string;
   roleCategories: {[category: string]: string[]};
