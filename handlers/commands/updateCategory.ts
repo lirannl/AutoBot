@@ -1,12 +1,11 @@
 import BotEnv from "../../botenv.ts";
 import config from "../../config.ts";
 import { Member, Message, sendMessage } from "../../deps.ts";
-import { nameToRole } from "../../utils.ts";
+import { memberHasRoles, nameToRole } from "../../utils.ts";
 import { argsParser } from "./command.ts";
 
 export default async ({ guild }: BotEnv, invoker: Member, message: Message) => {
-    const allowedRoles = config.roleCategoryManagerRoles.map(roleName => nameToRole(guild, roleName)!.id);
-    if (!invoker.roles.some(roleID => allowedRoles.includes(roleID))) return;
+    if (!memberHasRoles(invoker, config.roleCategoryManagerRoles)) return;
     const args = argsParser(message.content);
     if (args.length < 2) {
         await sendMessage(message.channelID, {content: "Sorry, you must specify a category.", replyMessageID: message.id});

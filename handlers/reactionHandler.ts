@@ -1,13 +1,10 @@
 import BotEnv from "../botenv.ts";
 import config from "../config.ts";
 import { eventHandlers, addReaction, Message, Member, removeReaction, ReactionPayload } from "../deps.ts";
-import { performantMultiOr } from "../utils.ts";
+import { memberHasRoles, performantMultiOr } from "../utils.ts";
 
 const mirror = async ({ reactionMirrorBindings }: BotEnv, message: Message, emoji: ReactionPayload, reacter: Member, type: "add" | "remove") => {
-    // Ensure that the reacter has one of the required roles
-    if (!performantMultiOr(
-        config.reactionMirroringRoles.map(roleName => reacter.roles.includes(roleName))
-    )) return;
+    if (!memberHasRoles(reacter, config.reactionMirroringRoles)) return;
     const binding = reactionMirrorBindings.find(({ source }) => message.id == source.id);
     if (binding && binding) {
         const operation = type == "add" ? addReaction : removeReaction;
@@ -18,5 +15,5 @@ const mirror = async ({ reactionMirrorBindings }: BotEnv, message: Message, emoj
 export default (botEnv: BotEnv, type: "add" | "remove"): typeof eventHandlers.reactionAdd | typeof eventHandlers.reactionRemove =>
     async (message, emoji, reactorID) => {
         const reactor = botEnv.guild.members.find(f => f.user.id == reactorID)!;
-        mirror(botEnv, message as Message, emoji, reactor, type);
+        await mirror(botEnv, message as Message, emoji, reactor, type);
     };
