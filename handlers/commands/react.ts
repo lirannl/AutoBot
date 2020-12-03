@@ -7,6 +7,7 @@ const msToLive = 20 * 1000;
 
 // Add a new reaction mirror binding
 export default async ({ guild, reactionMirrorBindings }: BotEnv, invoker: Member, message: Message) => {
+    if (!message.referencedMessageID) return;
     if (!memberHasRoles(invoker, config.reactionMirroringRoles)) {
         await deleteMessage(message); return;
     }
