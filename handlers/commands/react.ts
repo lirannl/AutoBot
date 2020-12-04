@@ -3,7 +3,7 @@ import config from "../../config.ts";
 import { memberHasRoles, nameToRole, performantMultiOr } from "../../utils.ts";
 import { Message, Member, getMessage, deleteMessage } from "../../deps.ts";
 
-const msToLive = 20 * 1000;
+const msToLive = 60 * 1000;
 
 // Add a new reaction mirror binding
 export default async ({ guild, reactionMirrorBindings }: BotEnv, invoker: Member, message: Message) => {
